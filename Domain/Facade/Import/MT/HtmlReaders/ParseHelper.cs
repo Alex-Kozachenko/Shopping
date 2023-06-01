@@ -1,23 +1,23 @@
 ﻿using NMoneys;
 
-namespace Shopping.Cloud.Common.Helpers;
+namespace Shopping.Domain.Facade.Import.MT.HtmlReaders;
 
-public static class ParseHelper
+internal static class ParseHelper
 {
-    public static decimal ToDecimal(this string value)
+    internal static decimal ToDecimal(this string value)
         => Convert.ToDecimal(value);
 
-    public static long ToInt64(this string value)
+    internal static long ToInt64(this string value)
         => Convert.ToInt64(value);
 
-    public static long ToInt64(this decimal value)
+    internal static long ToInt64(this decimal value)
         => Convert.ToInt64(value);
 
-    public static decimal ToSum(this string value)
+    internal static decimal ToSum(this string value)
         => value.Split(' ')
                 .First()
                 .ToDecimal();
 
-    public static Money ToMoney(this decimal value)
+    internal static Money ToMoney(this decimal value)
         => new(value);
 }

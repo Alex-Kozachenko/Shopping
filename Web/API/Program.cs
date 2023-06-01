@@ -1,25 +1,17 @@
+using System.Text;
+using Shopping.Contracts.Domain.Facade;
+using Shopping.Domain.Facade.Import;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<ISupplyPositionsReader, MTSupplyPositionsReader>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.MapGet("/", async context => { await context.Response.WriteAsync("HI"); } );
+
+app.MapPost("/upload", async (HttpContext context, ISupplyPositionsReader reader) => 
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+    var body = await context.Request.BodyReader.ReadAsync();
+});
 
 app.Run();

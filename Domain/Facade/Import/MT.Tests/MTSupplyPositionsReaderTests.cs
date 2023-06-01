@@ -38,9 +38,9 @@ public class MTSupplyPositionsReaderTests
             },
         };
 
-        var html = SupplyPackagesRenderer.Render(expectedPositions);
+        var htmlStream = SupplyPackagesRenderer.Render(expectedPositions);
         var reader = new MTSupplyPositionsReader();
-        var result = reader.Read(html);
+        var result = reader.Read(htmlStream);
 
         Assert.That(result, Is.EquivalentTo(expectedPositions));
     }
@@ -64,9 +64,9 @@ public class MTSupplyPositionsReaderTests
             }
         };
 
-        var html = SupplyPackagesRenderer.Render(expectedPosition);
+        var htmlStream = SupplyPackagesRenderer.Render(expectedPosition);
         var reader = new MTSupplyPositionsReader();
-        var actualPosition = reader.Read(html).First();
+        var actualPosition = reader.Read(htmlStream).First();
 
         Assert.Multiple(() =>
         {
