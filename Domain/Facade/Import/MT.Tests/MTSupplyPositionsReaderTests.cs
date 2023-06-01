@@ -1,4 +1,6 @@
-﻿using Shopping.Contracts.Data;
+﻿using System.IO.Pipelines;
+using Import.MT.Tests.Helpers;
+using Shopping.Contracts.Data;
 using Shopping.Contracts.Data.Supply;
 
 namespace Shopping.Domain.Facade.Import.MT.Tests;
@@ -40,7 +42,8 @@ public class MTSupplyPositionsReaderTests
 
         var htmlStream = SupplyPackagesRenderer.Render(expectedPositions);
         var reader = new MTSupplyPositionsReader();
-        var result = reader.Read(htmlStream);
+        var pipeReader = IOHelper.ToPipeReader(htmlStream);
+        var result = reader.Read(pipeReader).Result;
 
         Assert.That(result, Is.EquivalentTo(expectedPositions));
     }
@@ -65,8 +68,9 @@ public class MTSupplyPositionsReaderTests
         };
 
         var htmlStream = SupplyPackagesRenderer.Render(expectedPosition);
+        var pipeReader = IOHelper.ToPipeReader(htmlStream);
         var reader = new MTSupplyPositionsReader();
-        var actualPosition = reader.Read(htmlStream).First();
+        var actualPosition = reader.Read(pipeReader).Result();
 
         Assert.Multiple(() =>
         {

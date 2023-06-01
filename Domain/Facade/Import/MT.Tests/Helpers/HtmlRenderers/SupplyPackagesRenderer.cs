@@ -4,9 +4,9 @@ using Shopping.Contracts.Data.Supply;
 
 internal class SupplyPackagesRenderer
 {
-    public static Stream Render(params SupplyPosition[] positions)
+    public static string Render(params SupplyPosition[] positions)
     {
-        var html = string.Join('\n', positions
+        return string.Join('\n', positions
             .GroupBy(p => p.Invoice.Date)
             .Select(group => new
             {
@@ -14,9 +14,6 @@ internal class SupplyPackagesRenderer
                 OrderDateStr = group.First().Invoice.Date.ToString("dd-MM-yyyy") + " 23:59"
             })
             .Select(x => RenderTable(x.OrderDateStr, x.Positions.ToArray())));
-
-        var bytes = Encoding.UTF8.GetBytes(html);
-        return new MemoryStream(bytes);
     }
 
     public static string RenderTable(string orderDateStr, params SupplyPosition[] positions)

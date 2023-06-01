@@ -1,8 +1,10 @@
+using System.Collections.ObjectModel;
+using System.IO.Pipelines;
 using Shopping.Contracts.Data.Supply;
 
 namespace Shopping.Contracts.Domain.Facade;
 
 public interface ISupplyPositionsReader
 {
-    SupplyPosition[] Read(Stream htmlStream);
+    Task<ReadOnlyCollection<SupplyPosition>> Read(PipeReader htmlPipeReader);
 }

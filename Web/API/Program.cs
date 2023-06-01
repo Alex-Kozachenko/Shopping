@@ -11,7 +11,14 @@ app.MapGet("/", async context => { await context.Response.WriteAsync("HI"); } );
 
 app.MapPost("/upload", async (HttpContext context, ISupplyPositionsReader reader) => 
 {
-    var body = await context.Request.BodyReader.ReadAsync();
+    var bodyReader = context.Request.BodyReader;
+
+    
+    await bodyReader.CompleteAsync();
+
+    // var 
+
+    // reader.Read(sb.ToString());
 });
 
 app.Run();
